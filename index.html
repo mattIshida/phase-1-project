@@ -3,9 +3,105 @@
     <head>
         <title>Phase 1 Project</title>
         <meta charset = "UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="styles.css" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
         <script defer src="index.js"></script>
     </head>
     <body>
+
+        <div class="form-popup" id="myForm">
+            <form id="signup-form">
+                <img id="bf-logo-form" src="BuddyFinder.png" />
+                <h2> New user sign-up</h2>
+                <label for="user-name">Name: </label>
+                <input type="text" id="user-name" />
+                
+                <label for="user-location">Location: </label>
+                <input type="text" id="user-location" />
+    
+                <label for="user-age">Age: </label>
+                <input type="number" id="user-age" min="0"/>
+    
+                <label for="user-gender">Gender: </label>
+                <!--<input type="text" id ="user-gender" /> -->
+                <select name="user-gender" id="user-gender">
+                    <option value="">--Please choose an option--</option>
+                    <option value="female">Female</option>
+                    <option value="male">Male</option>
+                    <option value="other">Other</option>
+                </select>
+
+    
+                <label for="profile-photo">Upload a photo (URL): </label>
+                <input type="text" id="profile-photo" />
+    
+                <input type="submit" id="sign-up-submit" class="btn btn-primary" value="Create Profile">
+            </form>
+          </div>
+
+
+        <div id="site-logo">
+        </div>
+        <img id="bf-logo" src="BuddyFinder.png" />
+
+        <div>
+        <div id="filter-users">
+            <form id="filter-user-form">
+                <!--<label for="filter-gender">Gender: </label> -->
+                <div class="filter-input">
+                    <input type="radio" id="filter-male" name="filter-gender" value="male"/>
+                    <label for="filter-male">Male </label>
+                </div>
+                <div class="filter-input">
+                    <input type="radio" id="filter-female" name ="filter-gender" value="female" />
+                    <label for="filter-female">Female </label>
+                </div>
+                <div class="filter-input">
+                    <input type="radio" id="filter-gender-all" name ="filter-gender" value="all"/>
+                    <label for="filter-gender-all">All </label>
+                </div>                
+                <input type="submit" id="sign-up-submit" value="Filter">
+            </form>
+        </div>
+        <div id="display-users">
+            <h2>Find others</h2>
+            <div class="card" id="main-user-card" style="width: 30rem;">
+                <img id="other-img" class="card-img-top"/>
+                <div class="card-body">
+                    <h3 id="other-name" class="card-title"></h3>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><img src= "age-icon.png" class="card-icon"/><span id="other-age"></span> years</li>
+                        <li class="list-group-item"><img src= "location-icon.png" class="card-icon"/><span id="other-location"></span></li>
+                        <li class="list-group-item"><img src= "gender-icon.png" class="card-icon"/><span id="other-gender"></span></li>
+                        <li class="list-group-item"><img src= "breed-icon.png" class="card-icon"/><span id="other-breed"></span></li>
+                    </ul>
+
+                    <button id="dislike-user" class="btn btn-danger">Dislike</button>
+                    <button id="like-user" class="btn btn-success">Like</button>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div id="my-likes">
+            <h2>My likes</h2>
+            <div id="likes-nav">
+            </div>
+            <div id="likes-detail">
+                <img id="likes-img" />
+                <h3 id="likes-name"></h3>
+                <p>Age: <span id="likes-age"></span></p>
+                <p>Location: <span id="likes-location"></span></p>
+                <p>Gender: <span id="likes-gender"></span></p>
+                <p>Breed: <span id="likes-breed"></span></p>
+                <form id="message-form">
+                    <label for="message-like">Send a message: </label>
+                    <input type="text" id="message-like" />
+                    <input type="submit" value="Send"/>
+                </form>
+            </div>
+        </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     </body>
 </html>
