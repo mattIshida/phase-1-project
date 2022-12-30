@@ -77,7 +77,6 @@
                         <li class="list-group-item"><img src= "gender-icon.png" class="card-icon"/><span id="other-gender"></span></li>
                         <li class="list-group-item"><img src= "breed-icon.png" class="card-icon"/><span id="other-breed"></span></li>
                     </ul>
-
                     <button id="dislike-user" class="btn btn-danger">Dislike</button>
                     <button id="like-user" class="btn btn-success">Like</button>
                 </div>
@@ -88,20 +87,45 @@
             <h2>My likes</h2>
             <div id="likes-nav">
             </div>
-            <div id="likes-detail">
-                <img id="likes-img" />
-                <h3 id="likes-name"></h3>
-                <p>Age: <span id="likes-age"></span></p>
-                <p>Location: <span id="likes-location"></span></p>
-                <p>Gender: <span id="likes-gender"></span></p>
-                <p>Breed: <span id="likes-breed"></span></p>
-                <form id="message-form">
-                    <label for="message-like">Send a message: </label>
-                    <input type="text" id="message-like" />
-                    <input type="submit" value="Send"/>
-                </form>
-            </div>
+            <div class="card" style="max-width: 1200px; margin: auto;">
+                <div class="row g-0">
+                  
+                  <div class="col-4">
+                    <div class="card-body" id="likes-detail">
+                        <h3 id="likes-name" class="card-title"></h3>
+                        <p class="card-text">Age: <span id="likes-age"></span></p>
+                        <p class="card-text">Location: <span id="likes-location"></span></p>
+                        <p class="card-text">Gender: <span id="likes-gender"></span></p>
+                        <p class="card-text">Breed: <span id="likes-breed"></span></p>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <img id="likes-img" class="img-fluid rounded-start" alt="...">
+                  </div>
+                  <div class="col-4">
+                    <div id="message-section">
+                        <h3 id="message-title">Send a message</h3>
+                        <div id="message-log">
+                            
+                        </div>
+                        <form id="message-form">
+                            <div class="message-input">
+                                <label for="message-like">Send a message: </label>
+                                <input type="text" id="message-like" />
+                                <input type="submit" value="Send"/>
+                            </div>
+                        </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
         </div>
+
+        
+          
+
+        
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     </body>
 </html>

@@ -1,6 +1,7 @@
 // Globals
 const dogURL = "https://dog.ceo/api/breeds/image/random"
 const dataURL = "https://randomuser.me/api/?inc=gender,name,nat,location,dob&nat=us"
+const dogMessages = ["\uD83D\uDC36", "\uD83D\uDC9E", 'Arf Arf!', 'WOOF!', 'Arf Arf Arf!', 'Aroooooo!!']
 
 let currentUser;
 let globalUserArr;
@@ -23,6 +24,8 @@ const likesGender = document.querySelector("#likes-gender")
 const likesLocation = document.querySelector("#likes-location")
 const likesBreed = document.querySelector("#likes-breed")
 const filterUserForm = document.querySelector("#filter-user-form")
+const messageForm = document.querySelector("#message-form")
+const messageLog = document.querySelector("#message-log")
 
 // Event listeners
 likeButton.addEventListener("click", handleLike)
@@ -43,9 +46,34 @@ document.querySelector("#signup-form").addEventListener('submit', e => {
     e.preventDefault()
     document.getElementById("myForm").style.display = "none";
 })
-
+messageForm.addEventListener('submit', handleMessage)
 
 // Event handlers
+function handleMessage(e){
+    e.preventDefault()
+    const message = e.target['message-like'].value
+    const messageElement = document.createElement('div')
+    messageElement.textContent = message
+    messageElement.style.textAlign= 'right'
+    messageLog.append(messageElement)
+    messageElement.scrollIntoView()
+    messageForm.reset()
+
+    setTimeout(e => replyToMessage(e), 3000)
+}
+
+function replyToMessage(e){
+    const randomIndex = Math.floor(Math.random()*dogMessages.length)
+    const message = dogMessages[randomIndex]
+    const messageElement = document.createElement('div')
+    messageElement.textContent = message
+    messageElement.style.textAlign= 'left'
+    messageLog.append(messageElement)
+    messageElement.scrollIntoView()
+
+}
+
+
 function filterGender(e){
     e.preventDefault()
     const filterChoice = e.target['filter-gender'].value
@@ -80,6 +108,9 @@ function addUserToLikes(e){
     img.classList.add("img-thumbnail")
     img.addEventListener('click', () => renderLikesInfo(x))
     likesNav.append(img)
+
+
+
 }
 
 function generateNextUser(e){
