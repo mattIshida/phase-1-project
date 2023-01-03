@@ -5,7 +5,8 @@ const dogMessages = ["\uD83D\uDC36", "\uD83D\uDC9E", 'Arf Arf!', 'WOOF!', 'Arf A
 
 let currentUser;
 let globalUserArr;
-let filteredUserArr; 
+let filteredUserArr;
+let currentMessages='' 
 
 // DOM selectors
 const otherImg = document.querySelector("#other-img")
