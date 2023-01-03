@@ -214,10 +214,3 @@ getRandomData(dataURL, undefined, 50)
     })
 })
 
-
-console.log("Test")
-
-
-console.log("Hello World")
-
-
