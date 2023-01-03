@@ -111,6 +111,24 @@ function addUserToLikes(e){
     img.classList.add("img-thumbnail")
     img.addEventListener('click', () => renderLikesInfo(x))
     likesNav.append(img)
+
+    const deleteButton = document.createElement('button')
+    deleteButton.textContent = 'x'
+    deleteButton.addEventListener('click', ()=> {
+        img.remove()
+        deleteButton.remove()
+        clearLikesInfo()
+    })
+    likesNav.append(deleteButton)
+}
+function clearLikesInfo(){
+    likesName.textContent = ""
+    likesAge.textContent = ""
+    likesLocation.textContent = ""
+    likesGender.textContent = toTitleCase("")
+    likesImg.src = ""
+    likesBreed.textContent = ""
+    messageLog.innerHTML = ""
 }
 
 function generateNextUser(e){
