@@ -5,8 +5,7 @@ const dogMessages = ["\uD83D\uDC36", "\uD83D\uDC9E", 'Arf Arf!', 'WOOF!', 'Arf A
 
 let currentUser;
 let globalUserArr;
-let filteredUserArr;
-let currentMessages='' 
+let filteredUserArr; 
 
 // DOM selectors
 const otherImg = document.querySelector("#other-img")
@@ -43,13 +42,6 @@ filterUserForm.addEventListener("submit", filterGender)
 document.addEventListener('DOMContentLoaded', ()=> {
     document.querySelector("#myForm").style.display = 'block'
 })
-document.querySelector("#signup-form").addEventListener('submit', e => {
-    e.preventDefault()
-    document.getElementById("myForm").style.display = "none";
-})
-messageForm.addEventListener('submit', handleMessage)
-
-// Event handlers
 function handleMessage(e){
     e.preventDefault()
     const message = e.target['message-like'].value
@@ -62,6 +54,13 @@ function handleMessage(e){
 
     setTimeout(e => replyToMessage(e), 3000)
 }
+document.querySelector("#signup-form").addEventListener('submit', e => {
+    e.preventDefault()
+    document.getElementById("myForm").style.display = "none";
+})
+messageForm.addEventListener('submit', handleMessage)
+
+// Event handlers
 
 function replyToMessage(e){
     const randomIndex = Math.floor(Math.random()*dogMessages.length)
@@ -194,7 +193,7 @@ getRandomData(dataURL, undefined, 50)
         const userArr = randoms.results.map((randomObj, index) => {
 
             let breedValue = dogImgs.message[index].replace("https://images.dog.ceo/breeds/", '').split('/')[0]
-            console.log(fixBreedName(breedValue))
+            //console.log(fixBreedName(breedValue))
             breedValue = fixBreedName(breedValue)
             const newUser = {
                 firstName: randomObj.name.first,
@@ -210,7 +209,7 @@ getRandomData(dataURL, undefined, 50)
         })
         globalUserArr = userArr
         filteredUserArr = globalUserArr
-        console.log(userArr)
+        //console.log(userArr)
         displayUser(userArr[0])
     })
 })
