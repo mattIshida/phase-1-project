@@ -114,13 +114,18 @@ function addUserToLikes(e){
 
     const deleteButton = document.createElement('button')
     deleteButton.textContent = 'x'
+    const cachedUser = currentUser
     deleteButton.addEventListener('click', ()=> {
         img.remove()
         deleteButton.remove()
-        clearLikesInfo()
+        console.log('cached', cachedUser.index)
+        console.log('current', currentUser.index)
+        console.log('liked', likedUser.index)
+        if(cachedUser.index === likedUser.index) clearLikesInfo()
     })
     likesNav.append(deleteButton)
 }
+
 function clearLikesInfo(){
     likesName.textContent = ""
     likesAge.textContent = ""
