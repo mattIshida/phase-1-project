@@ -2,10 +2,13 @@
 const dogURL = "https://dog.ceo/api/breeds/image/random"
 const dataURL = "https://randomuser.me/api/?inc=gender,name,nat,location,dob&nat=us"
 const dogMessages = ["\uD83D\uDC36", "\uD83D\uDC9E", 'Arf Arf!', 'WOOF!', 'Arf Arf Arf!', 'Aroooooo!!']
+const userDataURL = "http://bf-user-data.onreder.com/users"
 
 let currentUser;
+let likedUser;
 let globalUserArr;
 let filteredUserArr; 
+const msgHistory = {};
 
 // DOM selectors
 const otherImg = document.querySelector("#other-img")
@@ -42,6 +45,27 @@ filterUserForm.addEventListener("submit", filterGender)
 document.addEventListener('DOMContentLoaded', ()=> {
     document.querySelector("#myForm").style.display = 'block'
 })
+document.querySelector("#signup-form").addEventListener('submit', e => {
+    e.preventDefault()
+    signUpNewUser(e)
+    document.getElementById("myForm").style.display = "none";
+})
+messageForm.addEventListener('submit', handleMessage)
+
+// Event handlers
+function signUpNewUser(e){
+    const body = {
+        name: e.target["user-name"].value,
+        age: e.target["user-age"].value,
+        location: e.target["user-location"].value,
+        gender: e.target["user-gender"].value,
+        image: e.target["profile-photo"].value
+    }
+
+    console.log(modifyUser(undefined, "GET", body))
+
+}
+
 function handleMessage(e){
     e.preventDefault()
     const message = e.target['message-like'].value
@@ -52,16 +76,10 @@ function handleMessage(e){
     messageElement.scrollIntoView()
     messageForm.reset()
 
+    msgHistory[likedUser.index] = messageLog.innerHTML
+    console.log(msgHistory)
     setTimeout(e => replyToMessage(e), 3000)
 }
-document.querySelector("#signup-form").addEventListener('submit', e => {
-    e.preventDefault()
-    document.getElementById("myForm").style.display = "none";
-})
-messageForm.addEventListener('submit', handleMessage)
-
-// Event handlers
-
 function replyToMessage(e){
     const randomIndex = Math.floor(Math.random()*dogMessages.length)
     const message = dogMessages[randomIndex]
@@ -70,7 +88,7 @@ function replyToMessage(e){
     messageElement.style.textAlign= 'left'
     messageLog.append(messageElement)
     messageElement.scrollIntoView()
-
+    msgHistory[likedUser.index] = messageLog.innerHTML
 }
 
 
@@ -109,8 +127,28 @@ function addUserToLikes(e){
     img.addEventListener('click', () => renderLikesInfo(x))
     likesNav.append(img)
 
+    const deleteButton = document.createElement('button')
+    deleteButton.textContent = 'x'
+    const cachedUser = currentUser
+    deleteButton.addEventListener('click', ()=> {
+        img.remove()
+        deleteButton.remove()
+        console.log('cached', cachedUser.index)
+        console.log('current', currentUser.index)
+        console.log('liked', likedUser.index)
+        if(cachedUser.index === likedUser.index) clearLikesInfo()
+    })
+    likesNav.append(deleteButton)
+}
 
-
+function clearLikesInfo(){
+    likesName.textContent = ""
+    likesAge.textContent = ""
+    likesLocation.textContent = ""
+    likesGender.textContent = toTitleCase("")
+    likesImg.src = ""
+    likesBreed.textContent = ""
+    messageLog.innerHTML = ""
 }
 
 function generateNextUser(e){
@@ -137,15 +175,37 @@ function getRandomData(url, gender, count){
         .then(response => response.json())
 }
 
+function modifyUser(userObj, method, body){
+    const config = {
+        method,
+        headers: {
+            "Content-Type": "Application/json",
+            Accept: "Application/json"
+        },
+        body
+    }
+    
+    //const url = method === 'PATCH' ? `${userDataURL}/${userObj.index}` : userDataURL
+    const url = userDataURL
+    fetch(url, config)
+    .then(response => response.json())
+    .then(() => {
+        return fetch(userDataURL)
+        .then(response => response.json())
+    })
+}
+
 // Render functions
 function renderLikesInfo(userObj){
     //debugger
+    likedUser = userObj
     likesName.textContent = userObj.firstName
     likesAge.textContent = userObj.age
     likesLocation.textContent = userObj.location
     likesGender.textContent = toTitleCase(userObj.gender)
     likesImg.src = userObj.image
     likesBreed.textContent = userObj.breed
+    messageLog.innerHTML = msgHistory[likedUser.index] ? msgHistory[likedUser.index] : ""
 }
 
 function displayUser(userObj){
@@ -209,8 +269,9 @@ getRandomData(dataURL, undefined, 50)
         })
         globalUserArr = userArr
         filteredUserArr = globalUserArr
-        //console.log(userArr)
+        console.log(userArr)
         displayUser(userArr[0])
     })
 })
+
 
