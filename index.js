@@ -2,6 +2,7 @@
 const dogURL = "https://dog.ceo/api/breeds/image/random"
 const dataURL = "https://randomuser.me/api/?inc=gender,name,nat,location,dob&nat=us"
 const dogMessages = ["\uD83D\uDC36", "\uD83D\uDC9E", 'Arf Arf!', 'WOOF!', 'Arf Arf Arf!', 'Aroooooo!!']
+const userDataURL = "http://bf-user-data.onreder.com/users"
 
 let currentUser;
 let likedUser;
@@ -46,11 +47,25 @@ document.addEventListener('DOMContentLoaded', ()=> {
 })
 document.querySelector("#signup-form").addEventListener('submit', e => {
     e.preventDefault()
+    signUpNewUser(e)
     document.getElementById("myForm").style.display = "none";
 })
 messageForm.addEventListener('submit', handleMessage)
 
 // Event handlers
+function signUpNewUser(e){
+    const body = {
+        name: e.target["user-name"].value,
+        age: e.target["user-age"].value,
+        location: e.target["user-location"].value,
+        gender: e.target["user-gender"].value,
+        image: e.target["profile-photo"].value
+    }
+
+    console.log(modifyUser(undefined, "GET", body))
+
+}
+
 function handleMessage(e){
     e.preventDefault()
     const message = e.target['message-like'].value
@@ -158,6 +173,26 @@ function getRandomData(url, gender, count){
     detailedURL = gender === undefined ? detailedURL : detailedURL + `&gender=${gender}`
     return fetch(detailedURL)
         .then(response => response.json())
+}
+
+function modifyUser(userObj, method, body){
+    const config = {
+        method,
+        headers: {
+            "Content-Type": "Application/json",
+            Accept: "Application/json"
+        },
+        body
+    }
+    
+    //const url = method === 'PATCH' ? `${userDataURL}/${userObj.index}` : userDataURL
+    const url = userDataURL
+    fetch(url, config)
+    .then(response => response.json())
+    .then(() => {
+        return fetch(userDataURL)
+        .then(response => response.json())
+    })
 }
 
 // Render functions
