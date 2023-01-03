@@ -4,8 +4,10 @@ const dataURL = "https://randomuser.me/api/?inc=gender,name,nat,location,dob&nat
 const dogMessages = ["\uD83D\uDC36", "\uD83D\uDC9E", 'Arf Arf!', 'WOOF!', 'Arf Arf Arf!', 'Aroooooo!!']
 
 let currentUser;
+let likedUser;
 let globalUserArr;
 let filteredUserArr; 
+const msgHistory = {};
 
 // DOM selectors
 const otherImg = document.querySelector("#other-img")
@@ -42,6 +44,13 @@ filterUserForm.addEventListener("submit", filterGender)
 document.addEventListener('DOMContentLoaded', ()=> {
     document.querySelector("#myForm").style.display = 'block'
 })
+document.querySelector("#signup-form").addEventListener('submit', e => {
+    e.preventDefault()
+    document.getElementById("myForm").style.display = "none";
+})
+messageForm.addEventListener('submit', handleMessage)
+
+// Event handlers
 function handleMessage(e){
     e.preventDefault()
     const message = e.target['message-like'].value
@@ -52,16 +61,10 @@ function handleMessage(e){
     messageElement.scrollIntoView()
     messageForm.reset()
 
+    msgHistory[likedUser.index] = messageLog.innerHTML
+    console.log(msgHistory)
     setTimeout(e => replyToMessage(e), 3000)
 }
-document.querySelector("#signup-form").addEventListener('submit', e => {
-    e.preventDefault()
-    document.getElementById("myForm").style.display = "none";
-})
-messageForm.addEventListener('submit', handleMessage)
-
-// Event handlers
-
 function replyToMessage(e){
     const randomIndex = Math.floor(Math.random()*dogMessages.length)
     const message = dogMessages[randomIndex]
@@ -70,7 +73,7 @@ function replyToMessage(e){
     messageElement.style.textAlign= 'left'
     messageLog.append(messageElement)
     messageElement.scrollIntoView()
-
+    msgHistory[likedUser.index] = messageLog.innerHTML
 }
 
 
@@ -108,9 +111,6 @@ function addUserToLikes(e){
     img.classList.add("img-thumbnail")
     img.addEventListener('click', () => renderLikesInfo(x))
     likesNav.append(img)
-
-
-
 }
 
 function generateNextUser(e){
@@ -140,12 +140,14 @@ function getRandomData(url, gender, count){
 // Render functions
 function renderLikesInfo(userObj){
     //debugger
+    likedUser = userObj
     likesName.textContent = userObj.firstName
     likesAge.textContent = userObj.age
     likesLocation.textContent = userObj.location
     likesGender.textContent = toTitleCase(userObj.gender)
     likesImg.src = userObj.image
     likesBreed.textContent = userObj.breed
+    messageLog.innerHTML = msgHistory[likedUser.index] ? msgHistory[likedUser.index] : ""
 }
 
 function displayUser(userObj){
@@ -209,10 +211,9 @@ getRandomData(dataURL, undefined, 50)
         })
         globalUserArr = userArr
         filteredUserArr = globalUserArr
-        //console.log(userArr)
+        console.log(userArr)
         displayUser(userArr[0])
     })
 })
 
-console.log("Hello World")
 
