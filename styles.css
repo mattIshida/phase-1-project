@@ -114,7 +114,9 @@
     /*flex-direction: column-reverse*/
 }
 
-
+#profileDrop{
+    float: right;
+}
 
 
 

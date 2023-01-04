@@ -30,6 +30,11 @@ const likesBreed = document.querySelector("#likes-breed")
 const filterUserForm = document.querySelector("#filter-user-form")
 const messageForm = document.querySelector("#message-form")
 const messageLog = document.querySelector("#message-log")
+const userName = document.querySelector('#userName')
+const userLocation = document.querySelector('#userLocation')
+const userAge = document.querySelector('#userAge')
+const userGender = document.querySelector('#userGender')
+const userProfilePic = document.querySelector('#profilePic')
 
 // Event listeners
 likeButton.addEventListener("click", handleLike)
@@ -49,6 +54,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
 document.querySelector("#signup-form").addEventListener('submit', e => {
     e.preventDefault()
     signUpNewUser(e)
+    updateNewUser(e)
     document.getElementById("myForm").style.display = "none";
 })
 messageForm.addEventListener('submit', handleMessage)
@@ -166,6 +172,22 @@ function generateNextUser(e){
     else alert('No more users!')
 }
 
+function updateNewUser(e){
+    newUserName = e.target["user-name"].value,
+    newUserAge = e.target["user-age"].value,
+    newUserLocation = e.target["user-location"].value,
+    newUserGender = e.target["user-gender"].value,
+    newUserImg = e.target["profile-photo"].value,
+    
+    userName.textContent = newUserName
+    userLocation.textContent = newUserLocation
+    userAge.textContent = newUserAge
+    userGender.textContent = newUserGender
+    userProfilePic.src = newUserImg
+
+
+}
+
 // Fetch functions
 function getDogImgs(url, count){
     const detailedURL = url + `/${count}`
@@ -223,6 +245,7 @@ function displayUser(userObj){
     otherImg.src = userObj.image
     otherBreed.textContent = userObj.breed
 }
+
 
 // Helper functions
 function fixBreedName(str){
