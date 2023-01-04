@@ -35,6 +35,8 @@ const userLocation = document.querySelector('#userLocation')
 const userAge = document.querySelector('#userAge')
 const userGender = document.querySelector('#userGender')
 const userProfilePic = document.querySelector('#profilePic')
+const editButton = document.querySelector("#edit")
+const logOffButton = document.querySelector('#log-off')
 
 // Event listeners
 likeButton.addEventListener("click", handleLike)
@@ -58,6 +60,8 @@ document.querySelector("#signup-form").addEventListener('submit', e => {
     document.getElementById("myForm").style.display = "none";
 })
 messageForm.addEventListener('submit', handleMessage)
+
+editButton.addEventListener('click', editInfo)
 
 // Event handlers
 function signUpNewUser(e){
@@ -184,8 +188,29 @@ function updateNewUser(e){
     userAge.textContent = newUserAge
     userGender.textContent = newUserGender
     userProfilePic.src = newUserImg
+}
 
-
+function editInfo(){
+   if (userName.contentEditable === 'false'){
+    userName.contentEditable = 'true'
+   } else {
+    userName.contentEditable = 'false'
+   }
+   if (userLocation.contentEditable === 'false'){
+    userLocation.contentEditable = 'true'
+   } else {
+    userLocation.contentEditable = 'false'
+   }
+   if (userAge.contentEditable === 'false'){
+    userAge.contentEditable = 'true'
+   } else {
+    userAge.contentEditable = 'false'
+   }
+   if (userGender.contentEditable === 'false'){
+    userGender.contentEditable = 'true'
+   } else {
+    userGender.contentEditable = 'false'
+   }
 }
 
 // Fetch functions

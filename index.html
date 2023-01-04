@@ -50,11 +50,13 @@
         <img id="profilePic" src="icons/genericUser.jpg" />
         </button>
         <div class="collapse" id="profileInfo">
-            <div class="card card-body">
-                <p class="card-text">Name: <span id="userName"></span></p>
-                <p class="card-text">Location: <span id="userLocation"></span></p>
-                <p class="card-text">Age: <span id="userAge"></span></p>
-                <p class="card-text">Gender: <span id="userGender"></span></p>
+            <div class="card card-body" id="dropInfo">
+                <p class="card-text">Name: <span id="userName" contenteditable="false"></span></p>
+                <p class="card-text">Location: <span id="userLocation" contenteditable="false"></span></p>
+                <p class="card-text">Age: <span id="userAge" contenteditable="false"></span></p>
+                <p class="card-text">Gender: <span id="userGender" contenteditable="false"></span></p>
+                <button id="edit" class="btn btn-primary btn-sm">Edit</button>
+                <button id="log-off" class="btn btn-secondary btn-sm">Log Off</button>
             </div>
         </div>
 
