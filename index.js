@@ -140,7 +140,8 @@ function addUserToLikes(e){
         myProfile.likedUsers.splice(indexToRemove, 1)
         modifyUser(myProfile, "PATCH", {likedUsers: myProfile.likedUsers})
         
-        if(myProfile.likedUsers[indexToRemove]) renderLikesInfo(myProfile.likedUsers[indexToRemove])
+        if(cachedUser.index !== likedUser.index) {}
+        else if (myProfile.likedUsers[indexToRemove]) renderLikesInfo(myProfile.likedUsers[indexToRemove])
         else if (myProfile.likedUsers[indexToRemove-1]) renderLikesInfo(myProfile.likedUsers[indexToRemove-1])
         else clearLikesInfo()
 
