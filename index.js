@@ -37,6 +37,7 @@ const userGender = document.querySelector('#userGender')
 const userProfilePic = document.querySelector('#profilePic')
 const editButton = document.querySelector("#edit")
 const logOffButton = document.querySelector('#log-off')
+const gender = document.querySelector('#user-gender')
 
 // Event listeners
 likeButton.addEventListener("click", handleLike)
@@ -62,6 +63,7 @@ document.querySelector("#signup-form").addEventListener('submit', e => {
 messageForm.addEventListener('submit', handleMessage)
 
 editButton.addEventListener('click', editInfo)
+logOffButton.addEventListener('click', logOff)
 
 // Event handlers
 function signUpNewUser(e){
@@ -206,11 +208,18 @@ function editInfo(){
    } else {
     userAge.contentEditable = 'false'
    }
-   if (userGender.contentEditable === 'false'){
-    userGender.contentEditable = 'true'
+   if (dropInfo.getElementsByTagName('select').length === 0) {
+    userGender.replaceWith(gender)
    } else {
-    userGender.contentEditable = 'false'
+    gender.replaceWith(userGender)
+    userGender.textContent = gender.value
    }
+}
+
+function logOff(){
+    document.getElementById("myForm").style.display = "block";
+    document.querySelector('#signup-form').reset()
+
 }
 
 // Fetch functions
