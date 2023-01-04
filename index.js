@@ -2,12 +2,13 @@
 const dogURL = "https://dog.ceo/api/breeds/image/random"
 const dataURL = "https://randomuser.me/api/?inc=gender,name,nat,location,dob&nat=us"
 const dogMessages = ["\uD83D\uDC36", "\uD83D\uDC9E", 'Arf Arf!', 'WOOF!', 'Arf Arf Arf!', 'Aroooooo!!']
-const userDataURL = "http://bf-user-data.onreder.com/users"
+const userDataURL = "https://bf-user-data.onrender.com/users"
 
 let currentUser;
 let likedUser;
 let globalUserArr;
-let filteredUserArr; 
+let filteredUserArr;
+let myProfile; 
 const msgHistory = {};
 
 // DOM selectors
@@ -59,11 +60,14 @@ function signUpNewUser(e){
         age: e.target["user-age"].value,
         location: e.target["user-location"].value,
         gender: e.target["user-gender"].value,
-        image: e.target["profile-photo"].value
+        image: e.target["profile-photo"].value,
+        likedUsers: [],
+        msgHistory: {}
     }
-
-    console.log(modifyUser(undefined, "GET", body))
-
+    modifyUser(undefined, "POST", body)
+    .then(json => {
+        myProfile = json
+    })
 }
 
 function handleMessage(e){
@@ -75,13 +79,13 @@ function handleMessage(e){
     messageLog.append(messageElement)
     messageElement.scrollIntoView()
     messageForm.reset()
-
     msgHistory[likedUser.index] = messageLog.innerHTML
-    console.log(msgHistory)
+    modifyUser(myProfile, "PATCH", {msgHistory})
     setTimeout(e => replyToMessage(e), 3000)
 }
+
 function replyToMessage(e){
-    const randomIndex = Math.floor(Math.random()*dogMessages.length)
+    const randomIndex = Math.floor(Math.random() * dogMessages.length)
     const message = dogMessages[randomIndex]
     const messageElement = document.createElement('div')
     messageElement.textContent = message
@@ -89,13 +93,12 @@ function replyToMessage(e){
     messageLog.append(messageElement)
     messageElement.scrollIntoView()
     msgHistory[likedUser.index] = messageLog.innerHTML
+    modifyUser(myProfile, "PATCH", {msgHistory})
 }
-
 
 function filterGender(e){
     e.preventDefault()
     const filterChoice = e.target['filter-gender'].value
-    //let filteredArr;
     if(filterChoice === 'male' || filterChoice === 'female'){
         filteredUserArr = globalUserArr.filter(userObj => userObj.gender === filterChoice)
         console.log(filteredUserArr)
@@ -105,9 +108,7 @@ function filterGender(e){
     } else {
         filteredUserArr = globalUserArr
     }
-
 }
-
 
 function handleDislike(e){
     generateNextUser(e)
@@ -119,6 +120,8 @@ function handleLike(e){
 }
 
 function addUserToLikes(e){
+    myProfile.likedUsers.push(currentUser)
+    modifyUser(myProfile, "PATCH", {likedUsers: myProfile.likedUsers})
     const img = document.createElement('img')
     img.src = currentUser.image
     img.className = 'nav-img'
@@ -133,10 +136,15 @@ function addUserToLikes(e){
     deleteButton.addEventListener('click', ()=> {
         img.remove()
         deleteButton.remove()
-        console.log('cached', cachedUser.index)
-        console.log('current', currentUser.index)
-        console.log('liked', likedUser.index)
-        if(cachedUser.index === likedUser.index) clearLikesInfo()
+        const indexToRemove = myProfile.likedUsers.findIndex(userObj => userObj.index === cachedUser.index)
+        myProfile.likedUsers.splice(indexToRemove, 1)
+        modifyUser(myProfile, "PATCH", {likedUsers: myProfile.likedUsers})
+        
+        if(myProfile.likedUsers[indexToRemove]) renderLikesInfo(myProfile.likedUsers[indexToRemove])
+        else if (myProfile.likedUsers[indexToRemove-1]) renderLikesInfo(myProfile.likedUsers[indexToRemove-1])
+        else clearLikesInfo()
+
+        //if(cachedUser.index === likedUser.index) clearLikesInfo()
     })
     likesNav.append(deleteButton)
 }
@@ -146,19 +154,15 @@ function clearLikesInfo(){
     likesAge.textContent = ""
     likesLocation.textContent = ""
     likesGender.textContent = toTitleCase("")
-    likesImg.src = ""
+    likesImg.src = "icons/genericUser.jpg"
     likesBreed.textContent = ""
     messageLog.innerHTML = ""
 }
 
 function generateNextUser(e){
-    //console.log("globalUserArr: ", globalUserArr)
-    //console.log("currentUserIndex: ", currentUserIndex)
     const nextUser = filteredUserArr.find(userObj => userObj.viewed === false)
     if (nextUser) displayUser(nextUser)
     else alert('No more users!')
-    //if (globalUserArr[currentUser.index+1]) displayUser(globalUserArr[currentUser.index+1])
-    //else alert('No more users!')
 }
 
 // Fetch functions
@@ -169,35 +173,35 @@ function getDogImgs(url, count){
 }
 
 function getRandomData(url, gender, count){
-    let detailedURL = url + `&results=${count}` //+ `&gender=${gender}`
+    let detailedURL = url + `&results=${count}` 
     detailedURL = gender === undefined ? detailedURL : detailedURL + `&gender=${gender}`
     return fetch(detailedURL)
         .then(response => response.json())
 }
 
-function modifyUser(userObj, method, body){
+function modifyUser(profileObj, method, body){
     const config = {
         method,
         headers: {
             "Content-Type": "Application/json",
             Accept: "Application/json"
         },
-        body
+        body: JSON.stringify(body)
     }
-    
-    //const url = method === 'PATCH' ? `${userDataURL}/${userObj.index}` : userDataURL
-    const url = userDataURL
-    fetch(url, config)
+   
+    const url = method === 'PATCH' ? `${userDataURL}/${profileObj.id}` : userDataURL
+
+    return fetch(url, config)
     .then(response => response.json())
-    .then(() => {
-        return fetch(userDataURL)
-        .then(response => response.json())
-    })
+    // .then(() => {
+    //     return fetch(userDataURL)
+    //     .then(response => response.json())
+    //     .then(json => json)
+    // })
 }
 
 // Render functions
 function renderLikesInfo(userObj){
-    //debugger
     likedUser = userObj
     likesName.textContent = userObj.firstName
     likesAge.textContent = userObj.age
@@ -232,28 +236,13 @@ function toTitleCase(str){
 
 
 // Initializers
-// getDogImgs(dogURL, 10)
-// .then(json => {
-//     //console.log(json.message)
-//     otherImg.src = json.message[0]
-// })
-
 getRandomData(dataURL, undefined, 50)
 .then(randoms => {
-    //console.log(randoms.results)
-    // otherName.textContent = json.results[0].name.first
-    // otherAge.textContent = Math.floor(json.results[0].dob.age/7)
-    // otherLocation.textContent = json.results[0].location.city
-    // otherGender.textContent = json.results[0].gender
-
     getDogImgs(dogURL, 50)
     .then(dogImgs => {
-        //console.log(dogImgs.message)
-        //otherImg.src = json.message[0]
         const userArr = randoms.results.map((randomObj, index) => {
 
             let breedValue = dogImgs.message[index].replace("https://images.dog.ceo/breeds/", '').split('/')[0]
-            //console.log(fixBreedName(breedValue))
             breedValue = fixBreedName(breedValue)
             const newUser = {
                 firstName: randomObj.name.first,
@@ -273,5 +262,3 @@ getRandomData(dataURL, undefined, 50)
         displayUser(userArr[0])
     })
 })
-
-
