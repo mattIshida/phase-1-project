@@ -30,6 +30,15 @@ const likesBreed = document.querySelector("#likes-breed")
 const filterUserForm = document.querySelector("#filter-user-form")
 const messageForm = document.querySelector("#message-form")
 const messageLog = document.querySelector("#message-log")
+const userName = document.querySelector('#userName')
+const userLocation = document.querySelector('#userLocation')
+const userAge = document.querySelector('#userAge')
+const userGender = document.querySelector('#userGender')
+const userProfilePic = document.querySelector('#profilePic')
+const editButton = document.querySelector("#edit")
+const logOffButton = document.querySelector('#log-off')
+const gender = document.querySelector('#user-gender')
+
 
 // Event listeners
 likeButton.addEventListener("click", handleLike)
@@ -49,10 +58,14 @@ document.addEventListener('DOMContentLoaded', ()=> {
 document.querySelector("#signup-form").addEventListener('submit', e => {
     e.preventDefault()
     signUpNewUser(e)
+    updateNewUser(e)
     document.getElementById("myForm").style.display = "none";
 })
 messageForm.addEventListener('submit', handleMessage)
 document.querySelector('#refresh-data').addEventListener('click', renderLikesData)
+
+editButton.addEventListener('click', editInfo)
+logOffButton.addEventListener('click', logOff)
 
 // Event handlers
 function signUpNewUser(e){
@@ -168,6 +181,57 @@ function generateNextUser(e){
     else alert('No more users!')
 }
 
+function updateNewUser(e){
+    newUserName = e.target["user-name"].value,
+    newUserAge = e.target["user-age"].value,
+    newUserLocation = e.target["user-location"].value,
+    newUserGender = e.target["user-gender"].value,
+    newUserImg = e.target["profile-photo"].value,
+    
+    userName.textContent = newUserName
+    userLocation.textContent = newUserLocation
+    userAge.textContent = newUserAge
+    userGender.textContent = newUserGender
+    userProfilePic.src = newUserImg
+}
+
+function editInfo(e){
+    
+   if (userName.contentEditable === 'false'){
+    userName.contentEditable = 'true'
+   } else {
+    userName.contentEditable = 'false'
+   }
+   if (userLocation.contentEditable === 'false'){
+    userLocation.contentEditable = 'true'
+   } else {
+    userLocation.contentEditable = 'false'
+   }
+   if (userAge.contentEditable === 'false'){
+    userAge.contentEditable = 'true'
+   } else {
+    userAge.contentEditable = 'false'
+   }
+   if (dropInfo.getElementsByTagName('select').length === 0) {
+    newUserGender = document.querySelector('#userGender')
+    let genderEdit = gender.cloneNode(true)
+    genderEdit.id = 'userGender'
+    newUserGender.replaceWith(genderEdit)
+   } else {
+    newUserGender = document.querySelector('#userGender')
+    genderUpdate = otherGender.cloneNode(true)
+    genderUpdate.textContent = newUserGender.value
+    genderUpdate.id = 'userGender'
+    newUserGender.replaceWith(genderUpdate)
+   }
+}
+
+function logOff(){
+    document.getElementById("myForm").style.display = "block";
+    document.querySelector('#signup-form').reset()
+
+}
+
 // Fetch functions
 function getDogImgs(url, count){
     const detailedURL = url + `/${count}`
@@ -225,6 +289,7 @@ function displayUser(userObj){
     otherImg.src = userObj.image
     otherBreed.textContent = userObj.breed
 }
+
 
 // Helper functions
 function fixBreedName(str){

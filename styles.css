@@ -101,9 +101,7 @@
 #message-title {
     text-align: center;
 }
-.message-input{
-    
-}
+
 #likes-detail{
     text-align:center;
 }
@@ -119,8 +117,14 @@
     padding: 0px;*/
 }
 
+#profileDrop{
+    float: right;
+}
 
+#log-off{
+    width: 100px
+}
 
-
-
-
+#edit{
+    width: 100px
+}

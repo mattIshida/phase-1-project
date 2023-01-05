@@ -28,9 +28,9 @@
                 <!--<input type="text" id ="user-gender" /> -->
                 <select name="user-gender" id="user-gender">
                     <option value="">--Please choose an option--</option>
-                    <option value="female">Female</option>
-                    <option value="male">Male</option>
-                    <option value="other">Other</option>
+                    <option value="Female">Female</option>
+                    <option value="Male">Male</option>
+                    <option value="Other">Other</option>
                 </select>
 
     
@@ -46,7 +46,20 @@
         </div>
         <img id="bf-logo" src="icons/BuddyFinder.png" />
 
+        <button id="profileDrop" class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#profileInfo" aria-expanded="false" aria-controls="profileInfo">
         <img id="profilePic" src="icons/genericUser.jpg" />
+        </button>
+        <div class="collapse" id="profileInfo">
+            <div class="card card-body" id="dropInfo">
+                <p class="card-text">Name: <span id="userName" contenteditable="false"></span></p>
+                <p class="card-text">Location: <span id="userLocation" contenteditable="false"></span></p>
+                <p class="card-text">Age: <span id="userAge" contenteditable="false"></span></p>
+                <p class="card-text">Gender: <span id="userGender" contenteditable="false"></span></p>
+                <button id="edit" class="btn btn-primary btn-sm">Edit</button>
+                <button id="log-off" class="btn btn-secondary btn-sm">Log Off</button>
+            </div>
+        </div>
+
 
     <div>
         <div id="filter-users">
