@@ -47,7 +47,7 @@
 }
 
 #likes-img {
-    max-height: 200px;
+    max-height: 200px; 
 }
 
 #bf-logo {
@@ -108,10 +108,15 @@
     text-align:center;
 }
 #message-log{
-    max-height: 200px;
+    max-height: 150px;
     overflow: auto;
     /*display: flex;*/
     /*flex-direction: column-reverse*/
+}
+.delete-button{
+    margin-left: -33px;
+    /*width: 10px;
+    padding: 0px;*/
 }
 
 
