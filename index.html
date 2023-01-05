@@ -86,7 +86,7 @@
         </div>
     </div>
         <div id="my-likes">
-            <h2>My likes</h2>
+            <h2 class="text-center">My likes</h2>
             <div id="likes-nav">
             </div>
             <div class="card" style="max-width: 1200px; margin: auto;">
@@ -101,8 +101,8 @@
                         <p class="card-text">Breed: <span id="likes-breed"></span></p>
                     </div>
                   </div>
-                  <div class="col-4">
-                    <img id="likes-img" class="img-fluid rounded-start" src="icons/genericUser.jpg">
+                  <div class="col-4 justify-content-center">
+                    <img id="likes-img" class="img-fluid rounded-end justify-content-right" src="icons/genericUser.jpg">
                   </div>
                   <div class="col-4">
                     <div id="message-section">
@@ -124,51 +124,52 @@
         </div>
         <div class="container py-4">
             <h2 class="text-center">Data</h2>
-            <div class="row">
-                <div class="col text-center">
-                    <h3>Top Breeds</h3>
-                </div>   
-            </div> 
-            <div class="row">
-                <div class="col-3"></div>
-                <div class="col">
-                    <h4 class="text-center">Me</h4>
-                    <ol id="my-top-breeds">
-                    </ol>
-                </div>
-                <div class="col align-items-center">
-                    <h4 class="text-center">Everyone</h4>
-                    <ol id="top-breeds">
-                    </ol>
-                </div>
-                <div class="col-3"></div>
-            </div>
-            <div class="row">
-                <div class="col text-center">
-                    <h3>Top Genders</h3>
-                </div>   
-            </div>    
-            <div class="row">
-                <div class="col-3"></div>
-                <div class="col">
-                    <h3 class="text-center">Me</h3>
-                    <ol id="my-top-genders">
-                    </ol>
-                </div>
-                <div class="col">
-                    <h4 class="text-center">Everyone</h4>
-                    <ol id="top-genders">
-                    </ol>
-                </div>
-                <div class="col-3"></div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <div class="text-center">
-                        <button id="refresh-data" type="button" class="btn btn-primary">Refresh Data</button>
+            <div class="row justify-content-center">
+                <div class="col-5 rounded">
+                    <div class="row">
+                        <div class="col text-center">
+                            <h3>Top Breeds</h3>
+                        </div>   
+                    </div> 
+                    <div class="row">
+                        <div class="col">
+                            <h4 class="text-center">Me</h4>
+                            <ol id="my-top-breeds">
+                            </ol>
+                        </div>
+                        <div class="col align-items-center">
+                            <h4 class="text-center">Everyone</h4>
+                            <ol id="top-breeds">
+                            </ol>
+                        </div>
                     </div>
+                    <div class="row">
+                        <div class="col text-center">
+                            <h3>Top Genders</h3>
+                        </div>   
+                    </div>    
+                    <div class="row">
+                        <div class="col">
+                            <h3 class="text-center">Me</h3>
+                            <ol id="my-top-genders">
+                            </ol>
+                        </div>
+                        <div class="col">
+                            <h4 class="text-center">Everyone</h4>
+                            <ol id="top-genders">
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="text-center">
+                                <button id="refresh-data" type="button" class="btn btn-primary">Refresh Data</button>
+                            </div>
+                        </div>
+                    </div>    
                 </div>
-            </div>    
+            </div>
+                
         </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     </body>
