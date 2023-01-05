@@ -133,6 +133,7 @@ function addUserToLikes(e){
 
     const deleteButton = document.createElement('button')
     deleteButton.textContent = 'x'
+    deleteButton.classList.add('delete-button', 'btn', 'btn-light', 'border','border-0')
     const cachedUser = currentUser
     deleteButton.addEventListener('click', ()=> {
         img.remove()
@@ -195,11 +196,6 @@ function modifyUser(profileObj, method, body){
 
     return fetch(url, config)
     .then(response => response.json())
-    // .then(() => {
-    //     return fetch(userDataURL)
-    //     .then(response => response.json())
-    //     .then(json => json)
-    // })
 }
 
 function getUserData(){
