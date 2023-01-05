@@ -39,6 +39,7 @@ const editButton = document.querySelector("#edit")
 const logOffButton = document.querySelector('#log-off')
 const gender = document.querySelector('#user-gender')
 
+
 // Event listeners
 likeButton.addEventListener("click", handleLike)
 dislikeButton.addEventListener("click", handleDislike)
@@ -192,7 +193,8 @@ function updateNewUser(e){
     userProfilePic.src = newUserImg
 }
 
-function editInfo(){
+function editInfo(e){
+    
    if (userName.contentEditable === 'false'){
     userName.contentEditable = 'true'
    } else {
@@ -209,10 +211,16 @@ function editInfo(){
     userAge.contentEditable = 'false'
    }
    if (dropInfo.getElementsByTagName('select').length === 0) {
-    userGender.replaceWith(gender)
+    newUserGender = document.querySelector('#userGender')
+    let genderEdit = gender.cloneNode(true)
+    genderEdit.id = 'userGender'
+    newUserGender.replaceWith(genderEdit)
    } else {
-    gender.replaceWith(userGender)
-    userGender.textContent = gender.value
+    newUserGender = document.querySelector('#userGender')
+    genderUpdate = otherGender.cloneNode(true)
+    genderUpdate.textContent = newUserGender.value
+    genderUpdate.id = 'userGender'
+    newUserGender.replaceWith(genderUpdate)
    }
 }
 
