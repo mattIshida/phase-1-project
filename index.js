@@ -192,7 +192,11 @@ function updateNewUser(e){
     userLocation.textContent = newUserLocation
     userAge.textContent = newUserAge
     userGender.textContent = newUserGender
-    userProfilePic.src = newUserImg
+    if (newUserImg === ''){
+        userProfilePic.src = 'icons/genericUser.jpg'
+    } else {
+        userProfilePic.src = newUserImg
+    }
 }
 
 function editInfo(e){
